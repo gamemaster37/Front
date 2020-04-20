@@ -172,6 +172,7 @@
             <div class="row pt-1 pb-4">
 
                 <div class="col text-right ">
+                        <a class="btn btn-primary" onclick="list()" role="button">&nbsp listEMp &nbsp</a>
                     <a class="btn btn-primary" onclick="myFunction()" role="button">&nbsp logout &nbsp</a>
                     <a href="signupem.html" class="btn btn-primary" role="button">&nbsp create &nbsp</a>
                 </div>
@@ -215,7 +216,11 @@
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
     </script>
+    <script src="js/employee.js"></script>  
     <script>
+        function list(){
+            console.log(getEmployees());
+         };
         async function myFunction() {
             await firebase.auth().signOut();
             window.location = "index.html";
