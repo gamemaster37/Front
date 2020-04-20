@@ -173,7 +173,7 @@
 
                 <div class="col text-right ">
                     <a class="btn btn-primary" onclick="myFunction()" role="button">&nbsp logout &nbsp</a>
-                    <a class="btn btn-primary" onclick="create()" role="button">&nbsp create &nbsp</a>
+                    <a href="signupem.html" class="btn btn-primary" role="button">&nbsp create &nbsp</a>
                 </div>
             </div>
         </div>
@@ -211,27 +211,17 @@
             measurementId: "G-DE561MK6M7"
         };
         // Initialize Firebase
-       
-        var secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
 
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
     </script>
-    <script src="js/newu.js"></script>
     <script>
         async function myFunction() {
             await firebase.auth().signOut();
             window.location = "index.html";
         };
-
-        function create() {
-            newU("Colaaua@gmail.com", "ueoipneh0wiiodnp309");
-    //        var user = firebase.auth().currentUser;
-
-        };
     </script>
     <!-- Firebase js -->
-
 </body>
 
 </html>

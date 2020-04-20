@@ -48,7 +48,7 @@
     </nav>
     <div class="card shadow-lg bg-white" id="cardall">
         <div class="card-header">
-            Aptitudes Test
+            Employee Register
         </div>
         <div class="card-body text-center">
             <img src="/img/valvula.svg" width="60" height="60" class="d-inline-block mb-4"
@@ -59,35 +59,26 @@
                     aria-describedby="basic-addon1">
             </div>
             <div class="input-group mb-4">
-                <input type="password" id="doctype" class="form-control" placeholder="Password" aria-label="Password"
+                <input type="text" id="image" class="form-control" placeholder="image" aria-label="image"
                     aria-describedby="basic-addon1">
             </div>
             <div class="input-group mb-4">
-                <input type="password" id="dni" class="form-control" placeholder="Password" aria-label="Password"
+                <input type="text" id="dir" class="form-control" placeholder="dir" aria-label="dir"
                     aria-describedby="basic-addon1">
             </div>
             <div class="input-group mb-4">
-                <input type="password" id="cimage" class="form-control" placeholder="Password" aria-label="Password"
-                    aria-describedby="basic-addon1">
-            </div>
-            <div class="input-group mb-4">
-                <input type="password" id="cname" class="form-control" placeholder="Password" aria-label="Password"
-                    aria-describedby="basic-addon1">
-            </div>
-            <div class="input-group mb-4">
-                <input type="password" id="tel" class="form-control" placeholder="Password" aria-label="Password"
-                    aria-describedby="basic-addon1">
-            </div>
-            <div class="input-group mb-4">
-                <input type="password" id="mail" class="form-control" placeholder="Password" aria-label="Password"
+                <input type="email" id="mail" class="form-control" placeholder="mail" aria-label="mail"
                     aria-describedby="basic-addon1">
             </div>
             <div class="input-group mb-4">
                 <input type="password" id="password" class="form-control" placeholder="Password" aria-label="Password"
                     aria-describedby="basic-addon1">
             </div>
-            <a onclick="myFunction()" class="btn btn-dark" style="margin-left: 10%;">&nbsp SingUp
+            <a href="list.html" class="btn btn-dark" style="margin-left: 10%;">&nbsp Back
                 &nbsp</a>
+            <a onclick="myFunction()" class="btn btn-dark" style="margin-left: 10%;">&nbsp Create
+                &nbsp</a>
+
         </div>
     </div>
 
@@ -123,28 +114,25 @@
             measurementId: "G-DE561MK6M7"
         };
         // Initialize Firebase
+        var secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
     </script>
-    <script src="js/signup.js"></script>
+    <script src="js/employee.js"></script>
     <script>
         function myFunction() {
-            var mail= document.getElementById("mail").value;
-            var password= document.getElementById("password").value;
+            var mail = document.getElementById("mail").value;
+            var password = document.getElementById("password").value;
             var company = {
                 name: document.getElementById("name").value,
-                doctype: document.getElementById("doctype").value,
-                dni: document.getElementById("dni").value,
-                cimage: document.getElementById("cimage").value,
-                cname: document.getElementById("cname").value,
-                tel: document.getElementById("tel").value,
+                image: document.getElementById("image").value,
+                dir: document.getElementById("dir").value
             }
             console.log(company);
-            signup(mail,password,company);
+            newEmployee(mail, password, company);
         };
     </script>
     <!-- Firebase js -->
-
 </body>
 
 </html>

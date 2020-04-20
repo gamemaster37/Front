@@ -23,6 +23,7 @@ function signup(mail, password, company) {
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
                     uid = firebase.auth().currentUser.uid;
+                    localStorage.uid=uid;
                     firebase.database().ref("Company/" + uid).set(Object.fromEntries(Object.entries(company)));
                     Swal.fire({
                         icon: 'success',
