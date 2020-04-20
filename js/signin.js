@@ -1,29 +1,23 @@
-function signin(user) {
+function signin(userio) {
     event.preventDefault();
-    firebase.auth().signInWithEmailAndPassword(user).catch(function(error) {
+    firebase.auth().signInWithEmailAndPassword(userio.mail, userio.password).catch(function (error) {
         var errorCode = error.code;
         var errorMessage = error.message;
-    });
-    firebase.auth().onAuthStateChanged(function(user) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Usuario y/o contraseña son incorrectos',
+        });
+    })
+    firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            firebase.auth().currentUser.getIdToken().then(function(idToken) {
+            firebase.auth().currentUser.getIdToken().then(function (idToken) {
                 localStorage.auth = idToken;
                 localStorage.uid = firebase.auth().currentUser.uid;
-
                 uid = firebase.auth().currentUser.uid;
-                firebase.database().ref("users/" + uid).update({
-                    "name": $("#nameUser").val(),
-                    "status": "0",
-                    "uid": uid,
-                    "challenge": false,
-                    "statusChallenge": false
-                });
-            });
-            window.location = "triqui.html";
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Usuario y/o contraseña son incorrectos',
+                Swal.fire({
+                    icon: 'success',
+                    title: 'usuario registrado, ya puede ingresar',
+                }).then(function () { window.location = "list.html"; });
             });
         }
     });

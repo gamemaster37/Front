@@ -39,7 +39,7 @@
 
     #myrow {
         cursor: pointer;
-     }
+    }
 
     .carousel-control-next-icon {
         background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='blue' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
@@ -96,8 +96,8 @@
                             </div> -->
             </div>
             <div class="container-fluid">
-                <div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded"
-                    id=myrow onclick="window.location='/test_r.html';">
+                <div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded" id=myrow
+                    onclick="window.location='/test_r.html';">
                     <div class="col-md-1">
                         <a id="basic-addon1">
                             <img src="/img/usuarioblue.svg" width="40" height="40" class="d-inline-block" alt="">
@@ -114,8 +114,8 @@
                         <a class="star">☆</a>
                     </div>
                 </div>
-                <div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded"
-                    id=myrow onclick="window.location='/test_r.html';">
+                <div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded" id=myrow
+                    onclick="window.location='/test_r.html';">
                     <div class="col-md-1">
                         <a id="basic-addon1">
                             <img src="/img/usuarioblue.svg" width="40" height="40" class="d-inline-block" alt="">
@@ -132,8 +132,8 @@
                         <a class="star">☆</a>
                     </div>
                 </div>
-                <div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded"
-                    id=myrow onclick="window.location='/test_r.html';">
+                <div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded" id=myrow
+                    onclick="window.location='/test_r.html';">
                     <div class="col-md-1">
                         <a id="basic-addon1">
                             <img src="/img/usuarioblue.svg" width="40" height="40" class="d-inline-block" alt="">
@@ -150,8 +150,8 @@
                         <a class="star">☆</a>
                     </div>
                 </div>
-                <div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded"
-                    id=myrow onclick="window.location='/test_r.html';">
+                <div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded" id=myrow
+                    onclick="window.location='/test_r.html';">
                     <div class="col-md-1">
                         <a id="basic-addon1">
                             <img src="/img/usuarioblue.svg" width="40" height="40" class="d-inline-block" alt="">
@@ -170,8 +170,10 @@
                 </div>
             </div>
             <div class="row pt-1 pb-4">
+
                 <div class="col text-right ">
-                    <a class="btn btn-primary" href="/index.html" role="button">&nbsp logout &nbsp</a>
+                    <a class="btn btn-primary" onclick="myFunction()" role="button">&nbsp logout &nbsp</a>
+                    <a class="btn btn-primary" onclick="create()" role="button">&nbsp create &nbsp</a>
                 </div>
             </div>
         </div>
@@ -179,6 +181,7 @@
     <!-- </div> -->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -188,6 +191,47 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+    <!--sweetAlert2-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <!-- Firebase js -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBQnFZIdOu1iHflA3TSQX5-uqAoEunf66E",
+            authDomain: "parcial-2-de682.firebaseapp.com",
+            databaseURL: "https://parcial-2-de682.firebaseio.com",
+            projectId: "parcial-2-de682",
+            storageBucket: "parcial-2-de682.appspot.com",
+            messagingSenderId: "605657635467",
+            appId: "1:605657635467:web:c2269af816af101420d28e",
+            measurementId: "G-DE561MK6M7"
+        };
+        // Initialize Firebase
+       
+        var secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
+
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+    <script src="js/newu.js"></script>
+    <script>
+        async function myFunction() {
+            await firebase.auth().signOut();
+            window.location = "index.html";
+        };
+
+        function create() {
+            newU("Colaaua@gmail.com", "ueoipneh0wiiodnp309");
+    //        var user = firebase.auth().currentUser;
+
+        };
+    </script>
+    <!-- Firebase js -->
+
 </body>
 
 </html>

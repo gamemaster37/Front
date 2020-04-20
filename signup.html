@@ -127,11 +127,12 @@
         firebase.analytics();
     </script>
     <script src="js/signup.js"></script>
+    <script src="js/rediret.js"></script>
     <script>
         function myFunction() {
+            var mail= document.getElementById("mail").value;
+            var password= document.getElementById("password").value;
             var company = {
-                mail: document.getElementById("mail").value,
-                password: document.getElementById("password").value,
                 name: document.getElementById("name").value,
                 doctype: document.getElementById("doctype").value,
                 dni: document.getElementById("dni").value,
@@ -140,7 +141,7 @@
                 tel: document.getElementById("tel").value,
             }
             console.log(company);
-            signup(company);
+            signup(mail,password,company);
         };
     </script>
     <!-- Firebase js -->
