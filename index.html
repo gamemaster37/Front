@@ -38,7 +38,7 @@
     }
 </style>
 
-<body class="bg">
+<body onload="clear()" class="bg">
     <nav class="navbar navbar-light bg-light mb-4" style="height: max-content;">
         <a class="navbar-brand" style="display: inline-flex;">
             <img src="/img/gas-natural.svg" width="60" height="60" class="d-inline-block" alt="">
@@ -53,7 +53,7 @@
             <img src="/img/valvula.svg" width="60" height="60" class="d-inline-block mb-4"
                 style="transform: rotate(90deg);">
             <!-- <h3 class="card-title mb-4">Caribean Gas</h3> -->
-            <div class="input-group mb-4">
+            <div class="input-group mb-4" >
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">
                         <img src="/img/usuario.svg" width="20" height="20" class="d-inline-block" alt="">
@@ -62,7 +62,7 @@
                 <input type="email" class="form-control" id="mail" placeholder="Username" aria-label="Username"
                     aria-describedby="basic-addon1">
             </div>
-            <div class="input-group mb-4">
+            <div id="disap" class="input-group mb-4">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">
                         <img src="/img/bloquear.svg" width="20" height="20" class="d-inline-block" alt="">
@@ -71,9 +71,11 @@
                 <input type="password" id="password" class="form-control" placeholder="Password" aria-label="Password"
                     aria-describedby="basic-addon1">
             </div>
-            <a onclick="recover()" class="btn btn-dark" style="margin-left: 10%;">Recover Password</a>
-            <a href="signup.html" class="btn btn-dark" style="margin-left: 10%;">&nbsp SingUp &nbsp</a>
-            <a onclick="myFunction()" class="btn btn-dark">&nbsp SingIn &nbsp</a>     
+            <div class="row">
+                <div class="col"><a href="signup.html">SingUp</a></div>
+                <div id="disap2" class="col"><a onclick="myFunction()" class="btn btn-dark">SingIn</a></div>
+                <div class="col"><a  href="#" onclick="Recover()" style="margin-left: 10%;">Reset Password</a></div>
+            </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -113,17 +115,31 @@
     <script src="js/signin.js"></script>
     <script src="js/rediret.js"></script>
     <script>
-        function recover(){
-            if (imput){
-
-
-
-            }else{
-
-
-
+        var a=false;
+        function Recover() {
+            document.getElementById('disap').style="display:none";
+            document.getElementById('disap2').style="display:none";
+            if (a){
+                let mail=document.getElementById('mail');
+            if (mail.checkValidity() & mail.value!="") {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'recovery mail was sended',
+                })
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid email',
+                })
             }
+            }
+           a=true;
         }
+
+        function clear(){
+            let mail=document.getElementById('mail').value="";
+        };
+        
         function myFunction() {
             var userio = {
                 mail: document.getElementById("mail").value,
