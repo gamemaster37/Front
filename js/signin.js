@@ -11,7 +11,6 @@ function signin(userio) {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             firebase.auth().currentUser.getIdToken().then(function (idToken) {
-                localStorage.auth = idToken;
                 localStorage.uid = firebase.auth().currentUser.uid;
                 uid = firebase.auth().currentUser.uid;
                 Swal.fire({

@@ -115,7 +115,7 @@
             <span class="sr-only">Next</span>
           </a>
           <div class="row align-items-center">
-            <div class="col-sm-7" style="margin-left: 10.5%;">
+            <!-- <div class="col-sm-7" style="margin-left: 10.5%;">
               <div class="progress">
                 <div
                   class="progress-bar progress-bar-striped"
@@ -125,10 +125,10 @@
                   aria-valuemin="0"
                   aria-valuemax="100"
                 ></div>
-              </div>
+              </div> -->
             </div>
-            <div class="col-sm-2 offset-sm-1">
-              <a class="btn btn-primary" onclick="list()" role="button"
+            <div class="col-sm-2 offset-sm-9">
+              <a class="btn btn-primary" onclick="getcheck()" role="button"
                 >Send Test</a
               >
             </div>
@@ -181,49 +181,106 @@
     </script>
     <script src="js/questions.js"></script>
     <script>
-      async function list(){
-          var quest=await getQuestion();
-          var i=0;
-          quest.forEach(element => {
-              var ele = document.getElementById("question"+i);
-              i++;
-              var myvar = '<div class=\'container\' style=\'margin-left:10%; width: 80%;\'>'+
-                          '    <h1>Question '+i+'</h1>'+
-                          '    <h3 class=\'mb-4\'>'+element.question+'</h3>'+
-                          '    <div class=\'container\' style=\'margin-left:5%;\'>'+
-                          '        <div class=\'form-check mb-2\'>'+
-                          '            <input class=\'form-check-input\' type=\'radio\' name=\'exampleRadios\''+
-                          '                id=\'exampleRadios2\' value=\'option2\'>'+
-                          '            <label class=\'form-check-label\' for=\'exampleRadios2\'>'+
-                                         element.panswer[0]+
-                          '            </label>'+
-                          '        </div>'+
-                          '        <div class=\'form-check mb-2\'>'+
-                          '            <input class=\'form-check-input\' type=\'radio\' name=\'exampleRadios\''+
-                          '                id=\'exampleRadios2\' value=\'option2\'>'+
-                          '            <label class=\'form-check-label\' for=\'exampleRadios2\'>'+
-                                         element.panswer[1]+
-                          '            </label>'+
-                          '        </div>'+
-                          '        <div class=\'form-check mb-2\'>'+
-                          '            <input class=\'form-check-input\' type=\'radio\' name=\'exampleRadios\''+
-                          '                id=\'exampleRadios2\' value=\'option2\'>'+
-                          '            <label class=\'form-check-label\' for=\'exampleRadios2\'>'+
-                                         element.panswer[2]+
-                          '            </label>'+
-                          '        </div>'+
-                          '        <div class=\'form-check mb-3\'>'+
-                          '            <input class=\'form-check-input\' type=\'radio\' name=\'exampleRadios\''+
-                          '                id=\'exampleRadios2\' value=\'option2\'>'+
-                          '            <label class=\'form-check-label\' for=\'exampleRadios2\'>'+
-                                         element.panswer[3]+
-                          '            </label>'+
-                          '        </div>'+
-                          '    </div>'+
-                          '</div>';
-                ele.innerHTML = myvar; 
+      var quest;
+      async function list() {
+        quest = await getQuestion();
+        var i = 0;
+        quest.forEach((element) => {
+          var ele = document.getElementById("question" + i);
+          i++;
+          var myvar =
+            "<div class='container' style='margin-left:10%; width: 80%;'>" +
+            "    <h1>Question " +
+            i +
+            "</h1>" +
+            "    <h3 class='mb-4'>" +
+            element.question +
+            "</h3>" +
+            "    <div class='container' style='margin-left:5%;'>" +
+            "        <div class='form-check mb-2'>" +
+            "            <input class='form-check-input' type='radio' name='exampleRadios" +
+            i +
+            "'" +
+            "                value='0'>" +
+            "            <label class='form-check-label' for='exampleRadios2'>" +
+            element.panswer[0] +
+            "            </label>" +
+            "        </div>" +
+            "        <div class='form-check mb-2'>" +
+            "            <input class='form-check-input' type='radio' name='exampleRadios" +
+            i +
+            "'" +
+            "                value='1'>" +
+            "            <label class='form-check-label' for='exampleRadios2'>" +
+            element.panswer[1] +
+            "            </label>" +
+            "        </div>" +
+            "        <div class='form-check mb-2'>" +
+            "            <input class='form-check-input' type='radio' name='exampleRadios" +
+            i +
+            "'" +
+            "                value='2'>" +
+            "            <label class='form-check-label' for='exampleRadios2'>" +
+            element.panswer[2] +
+            "            </label>" +
+            "        </div>" +
+            "        <div class='form-check mb-3'>" +
+            "            <input class='form-check-input' type='radio' name='exampleRadios" +
+            i +
+            "'" +
+            "                value='3'>" +
+            "            <label class='form-check-label' for='exampleRadios2'>" +
+            element.panswer[3] +
+            "            </label>" +
+            "        </div>" +
+            "    </div>" +
+            "</div>";
+          ele.innerHTML = myvar;
+        });
+      }
+      function getcheck() {
+        var rates = [];
+        Array.from(document.getElementsByClassName("form-check-input")).forEach(
+          function (element) {
+            if (element.checked) {
+              rates.push(parseInt(element.value));
+            }
+          }
+        );
+        if (rates.length < 5) {
+          Swal.fire({
+            icon: "error",
+            title: "Test Incomplete",
           });
-       };
+        } else {
+          [grade, total] = calcGrade(rates);
+          var answer = {
+            answer: rates,
+            grade: grade,
+            total: total
+          };
+          Swal.fire({
+            icon: "success",
+            title: "Test Completed",
+          }).then(() => {
+            addAnswer(answer);
+          });
+        }
+      }
+
+      function calcGrade(rates) {
+        var score = 0,
+          total = 0,
+          i = 0;
+        quest.forEach(function (element) {
+          if (element.answer == rates[i]) {
+            score += element.value;
+          }
+          total += element.value;
+          i++;
+        });
+        return [score, total];
+      }
     </script>
   </body>
 </html>

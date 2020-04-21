@@ -21,13 +21,21 @@ async function getQuestion() {
   return questions;
 }
 
-// var answer = {
-//     answer : [4,2,1,3,1],
-//     grade : 100
-// }
 function addAnswer(answer) {
-    firebase
+  firebase
     .database()
     .ref("Employee/" + localStorage["uid"] + "/questionary")
-    .set(answer);
+    .set(answer)
+    .then(function () {
+      window.location = "test_r.html";
+    });
+}
+
+async function getResults(uid) {
+  var results = await firebase
+    .database()
+    .ref("Employee/" + uid + "/questionary")
+    .once("value");
+  results = results.val();
+  return results;
 }
