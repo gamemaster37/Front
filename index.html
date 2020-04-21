@@ -59,7 +59,7 @@
                         <img src="/img/usuario.svg" width="20" height="20" class="d-inline-block" alt="">
                     </span>
                 </div>
-                <input type="text" class="form-control" id="mail" placeholder="Username" aria-label="Username"
+                <input type="email" class="form-control" id="mail" placeholder="Username" aria-label="Username"
                     aria-describedby="basic-addon1">
             </div>
             <div class="input-group mb-4">
@@ -71,8 +71,9 @@
                 <input type="password" id="password" class="form-control" placeholder="Password" aria-label="Password"
                     aria-describedby="basic-addon1">
             </div>
-            <a onclick="myFunction()" class="btn btn-dark">&nbsp SingIn &nbsp</a>
+            <a onclick="recover()" class="btn btn-dark" style="margin-left: 10%;">Recover Password</a>
             <a href="signup.html" class="btn btn-dark" style="margin-left: 10%;">&nbsp SingUp &nbsp</a>
+            <a onclick="myFunction()" class="btn btn-dark">&nbsp SingIn &nbsp</a>     
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -112,6 +113,17 @@
     <script src="js/signin.js"></script>
     <script src="js/rediret.js"></script>
     <script>
+        function recover(){
+            if (imput){
+
+
+
+            }else{
+
+
+
+            }
+        }
         function myFunction() {
             var userio = {
                 mail: document.getElementById("mail").value,

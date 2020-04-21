@@ -36,22 +36,24 @@ function newEmployee(mail, password, company) {
     .then(() => {
       // autenticacion con firebase
       if (aux) {
-        secondaryApp.auth().onAuthStateChanged(function (user) {
-          if (user) {
-            var uid = localStorage["uid"];
-            var suid = secondaryApp.auth().currentUser.uid;
-            firebase
-              .database()
-              .ref("Employee/" + suid)
-              .set(
-                Object.fromEntries(Object.entries({ company: uid, ...company }))
-              );
-            Swal.fire({
-              icon: "success",
-              title: "usuario registrado",
-            }).then(function () {
-              window.location = "list.html";
-            });
+          secondaryApp.auth().onAuthStateChanged(function (user) {
+            if (user) {
+              var uid = localStorage["uid"];
+              var suid = secondaryApp.auth().currentUser.uid;
+              firebase
+                .database()
+                .ref("Employee/" + suid)
+                .set(
+                  Object.fromEntries(Object.entries({ company: uid, ...company }))
+                ).then(function(){
+                  Swal.fire({
+                    icon: "success",
+                    title: "usuario registrado",
+                  }).then(function () {
+                    window.location = "list.html";
+                  });
+                });
+           
           }
         });
       }

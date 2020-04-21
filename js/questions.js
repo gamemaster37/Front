@@ -46,3 +46,32 @@ async function deleteResults(uid) {
     .ref("Employee/" + uid + "/questionary");
   results = results.remove();
 }
+
+async function gestTest(uid) {
+  // Find all dinosaurs whose height is exactly 25 meters.
+  var employee = [];
+  var company = await firebase.database().ref("Employee/");
+  var answer = await company.orderByChild("questionary/date").once("value");
+  await answer.forEach((ans) => {
+    if (ans.val().questionary) {
+      if (ans.val().company == uid) {
+        employee.push({
+          key: ans.key,
+          ...ans.val(),
+        });
+      }
+    }
+  });
+  return employee;
+}
+
+async function onTest(uid) {
+  // Find all dinosaurs whose height is exactly 25 meters.
+  var employee = [];
+  var company = await firebase.database().ref("Employee/");
+  var answer = await company
+    .orderByChild("questionary/date")
+    .on("child_changed", function () {
+      console.log(message(uid));
+    });
+}

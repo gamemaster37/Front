@@ -48,6 +48,7 @@
         background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='blue' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
     }
 </style>
+<link rel="stylesheet" href="./css/Messages.css">
 
 <body onload="list()" class="bg">
     <nav class="navbar navbar-light bg-light" style="height: max-content;">
@@ -63,9 +64,17 @@
         </div> -->
     <!-- <div class="card-body overflow-auto"> -->
     <div class="container">
+
+        <div class="callout" id="cardmsg">
+            <div class="callout-header">Messages</div>
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">×</span>
+            <div class="callout-container" id="msg">
+
+            </div>
+        </div>
         <div class="row pt-3 pb-4">
             <div class="col">
-                <h1 id="number" >Employees</h1>
+                <h1 id="number">Employees</h1>
             </div>
             <div class="col text-right ">
                 <!-- <div class="rating">
@@ -99,7 +108,7 @@
             </div>
             <div class="row pt-1 pb-4">
                 <div class="col text-right ">
-                    <a class="btn btn-primary"  role="button">&nbsp edit test &nbsp</a>
+                    <a class="btn btn-primary" role="button">&nbsp edit test &nbsp</a>
                     <a class="btn btn-primary" onclick="myFunction()" role="button">&nbsp logout &nbsp</a>
                     <a href="signupem.html" class="btn btn-primary" role="button">&nbsp create &nbsp</a>
                 </div>
@@ -144,17 +153,34 @@
         firebase.analytics();
     </script>
     <script src="js/employee.js"></script>
+    <script src="js/questions.js"></script>
     <script>
+        
+        async function message() {
+            var employess = await gestTest(localStorage.uid);
+            console.log(employess)
+            var myvar="";
+            var ele = document.getElementById("msg");
+            employess.forEach(employe => {
+                var name = employe.name
+                myvar += '<p>'+employe.name+'<br> Hizo el test el '+new Date(employe.questionary.date).toLocaleString()+'</p>';
+            });
+            ele.innerHTML=myvar;
+            document.getElementById("cardmsg").style='';
+        }
+
+            onTest();
+
         async function list() {
-            var employess =  await getEmployees();
+            var employess = await getEmployees();
             var ele = document.getElementById("list");
-            document.getElementById("number").innerHTML="Employees ("+Object.keys(employess).length+")";
+            document.getElementById("number").innerHTML = "Employees (" + Object.keys(employess).length + ")";
             var myvar;
             employess.forEach((employe) => {
                 console.log(employe.key)
                 var uid = "?uid=" + employe.key;
                 myvar = '<div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded" id=myrow' +
-                    '                    onclick="window.location=\'/test_r.html'+uid+'\';">' +
+                    '                    onclick="window.location=\'/test_r.html' + uid + '\';">' +
                     '                    <div class="col-md-1">' +
                     '                        <a id="basic-addon1">' +
                     '                            <img src="/img/usuarioblue.svg" width="40" height="40" class="d-inline-block" alt="">' +
@@ -167,9 +193,9 @@
                     '                        <a class="star">Click to check Results</a>' +
                     '                    </div>' +
                     '                </div>';
-                    ele.innerHTML+="\n"+myvar;
+                ele.innerHTML += "\n" + myvar;
             });
-
+            message();
         };
 
         async function myFunction() {
