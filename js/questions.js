@@ -27,7 +27,7 @@ function addAnswer(answer) {
     .ref("Employee/" + localStorage["uid"] + "/questionary")
     .set(answer)
     .then(function () {
-      window.location = "test_r.html";
+      window.location = "test_r.html?uid=" + localStorage["uid"];
     });
 }
 
@@ -38,4 +38,11 @@ async function getResults(uid) {
     .once("value");
   results = results.val();
   return results;
+}
+
+async function deleteResults(uid) {
+  var results = await firebase
+    .database()
+    .ref("Employee/" + uid + "/questionary");
+  results = results.remove();
 }

@@ -13,7 +13,7 @@ async function getEmployees() {
           }
       })
   );
-   await console.log(JSON.stringify(results))
+   return results
 }
 
 function newEmployee(mail, password, company) {

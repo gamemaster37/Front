@@ -11,6 +11,8 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>Gas Company!</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 
 <style>
@@ -53,7 +55,8 @@
     }
 </style>
 
-<body class="bg">
+<body onload="myFunction()" class="bg">
+
     <nav class="navbar navbar-light bg-light mb-4" style="height: max-content;">
         <a class="navbar-brand" style="display: inline-flex;">
             <img src="/img/gas-natural.svg" width="60" height="60" class="d-inline-block" alt="">
@@ -70,38 +73,23 @@
                 <div class="col">
                     <h1>Test Results</h1>
                 </div>
-                <div class="col text-right ">
-                    <div class="rating">
-                        <a class="text-muted" style="font-size: x-large;">Score: </a>
-                        <a class="star">★</a>
-                        <a class="star">★</a>
-                        <a class="star">★</a>
-                        <a class="star">☆</a>
-                        <a class="star">☆</a>
+
+            </div>
+            <div class="container">
+                <div id="card">
+                    <!-- <div class="spinner-border text-primary" role="status">
+                                <span class="sr-only">Loading...</span>
+                              </div> -->
+                    <div id="chart">
                     </div>
                 </div>
-            </div>
-            <div class="container-fluid">
-                <div class="alert  alert-info" role="alert">
-                    Question One Succed, Well Done!
-                </div>
-                <div class="alert   alert-dark" role="alert">
-                    <h4 class="alert-heading">Question Two Wrong Answer, check it out!</h4>
-                    <p>The corret answer is: Lorem, ipsum dolor sit amet consectetur adipisicing elit. </p>
-                </div>
-                <div class="alert   alert-dark" role="alert">
-                    <h4 class="alert-heading">Question Three Wrong Answer, check it out!</h4>
-                    <p>The corret answer is: Lorem, ipsum dolor sit amet consectetur adipisicing elit. </p>
-                </div>
-                <div class="alert  alert-info" role="alert">
-                    Question Fourt Succed, Well Done!
-                </div>
-                <div class="alert  alert-info" role="alert">
-                    Question Five Succed, Well Done!
-                </div>
                 <div class="row pt-1 pb-4">
-                    <div class="col text-right ">
-                        <a class="btn btn-primary" href="/list.html" role="button">End Test</a>
+                    <div id="grade" class="col text-right ">
+                        
+                    </div>
+                    <div class="col-md-5 text-right ">
+                        <a class="btn btn-primary" onclick="deltest()" role="button">Delete Test</a>
+                        <a class="btn btn-primary" onclick="logout()" role="button">End Test</a>
                     </div>
                 </div>
             </div>
@@ -118,5 +106,142 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
 </body>
+<!--sweetAlert2-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<!-- Firebase js -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyBQnFZIdOu1iHflA3TSQX5-uqAoEunf66E",
+        authDomain: "parcial-2-de682.firebaseapp.com",
+        databaseURL: "https://parcial-2-de682.firebaseio.com",
+        projectId: "parcial-2-de682",
+        storageBucket: "parcial-2-de682.appspot.com",
+        messagingSenderId: "605657635467",
+        appId: "1:605657635467:web:c2269af816af101420d28e",
+        measurementId: "G-DE561MK6M7",
+    };
+    // Initialize Firebase
+
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+</script>
+<script src="js/questions.js"></script>
+<script>
+    async function myFunction() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        var answe = await getResults(urlParams.get('uid'));
+        total = (answe.grade / answe.total) * 100;
+        document.getElementById("grade").innerHTML="<h1 class='text-muted'>"+answe.grade+"/"+answe.total+"</h1>";
+        divuyito(total);
+    }
+    async function deltest() {
+        await deleteResults();
+        Swal.fire({
+            icon: "success",
+            title: "Test Deleted",
+          }).then(()=>{
+            window.location = "list.html";
+          });
+        
+    };
+
+    async function logout() {
+        await firebase.auth().signOut();
+        window.location = "index.html";
+    };
+
+    function divuyito(total) {
+        var options = {
+            series: [total],
+            chart: {
+                height: 350,
+                type: 'radialBar',
+                toolbar: {
+                    show: false
+                }
+            },
+            plotOptions: {
+                radialBar: {
+                    startAngle: -135,
+                    endAngle: 225,
+                    hollow: {
+                        margin: 0,
+                        size: '70%',
+                        background: '#fff',
+                        image: undefined,
+                        imageOffsetX: 0,
+                        imageOffsetY: 0,
+                        position: 'front',
+                        dropShadow: {
+                            enabled: true,
+                            top: 3,
+                            left: 0,
+                            blur: 4,
+                            opacity: 0.24
+                        }
+                    },
+                    track: {
+                        background: '#fff',
+                        strokeWidth: '67%',
+                        margin: 0, // margin is in pixels
+                        dropShadow: {
+                            enabled: true,
+                            top: -3,
+                            left: 0,
+                            blur: 4,
+                            opacity: 0.35
+                        }
+                    },
+
+                    dataLabels: {
+                        show: true,
+                        name: {
+                            offsetY: -10,
+                            show: true,
+                            color: '#888',
+                            fontSize: '17px'
+                        },
+                        value: {
+                            formatter: function (val) {
+                                return parseInt(val);
+                            },
+                            color: '#111',
+                            fontSize: '36px',
+                            show: true,
+                        }
+                    }
+                }
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'dark',
+                    type: 'horizontal',
+                    shadeIntensity: 0.5,
+                    gradientToColors: ['#ABE5A1'],
+                    inverseColors: true,
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [0, 100]
+                }
+            },
+            stroke: {
+                lineCap: 'round'
+            },
+            labels: ['Succes Rate'],
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    };
+
+
+</script>
 
 </html>

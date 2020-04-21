@@ -21,7 +21,7 @@
     }
 
     .star {
-        font-size: xx-large;
+        font-size: x-large;
     }
 
     .bg {
@@ -34,7 +34,6 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-
     }
 
     #myrow {
@@ -50,7 +49,7 @@
     }
 </style>
 
-<body class="bg">
+<body onload="list()" class="bg">
     <nav class="navbar navbar-light bg-light" style="height: max-content;">
         <a class="navbar-brand" style="display: inline-flex;">
             <img src="/img/gas-natural.svg" width="60" height="60" class="d-inline-block" alt="">
@@ -66,17 +65,17 @@
     <div class="container">
         <div class="row pt-3 pb-4">
             <div class="col">
-                <h1>Employees (4)</h1>
+                <h1 id="number" >Employees</h1>
             </div>
             <div class="col text-right ">
-                <div class="rating">
+                <!-- <div class="rating">
                     <a class="text-muted" style="font-size: larger;">Average Score: </a>
                     <a class="star">★</a>
                     <a class="star">★</a>
                     <a class="star">★</a>
                     <a class="star">☆</a>
                     <a class="star">☆</a>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="container-fluid">
@@ -95,84 +94,12 @@
                                 <button class="btn btn-outline-secondary" type="button" id="button-addon2">GO!</button>
                             </div> -->
             </div>
-            <div class="container-fluid">
-                <div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded" id=myrow
-                    onclick="window.location='/test_r.html';">
-                    <div class="col-md-1">
-                        <a id="basic-addon1">
-                            <img src="/img/usuarioblue.svg" width="40" height="40" class="d-inline-block" alt="">
-                        </a>
-                    </div>
-                    <div class="col-md-7">
-                        <h3>Omae wa namae wa</h3>
-                    </div>
-                    <div class="col-md-4 text-right ">
-                        <a class="star">★</a>
-                        <a class="star">★</a>
-                        <a class="star">★</a>
-                        <a class="star">☆</a>
-                        <a class="star">☆</a>
-                    </div>
-                </div>
-                <div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded" id=myrow
-                    onclick="window.location='/test_r.html';">
-                    <div class="col-md-1">
-                        <a id="basic-addon1">
-                            <img src="/img/usuarioblue.svg" width="40" height="40" class="d-inline-block" alt="">
-                        </a>
-                    </div>
-                    <div class="col-md-7">
-                        <h3>Omae wa namae wa</h3>
-                    </div>
-                    <div class="col-md-4 text-right ">
-                        <a class="star">★</a>
-                        <a class="star">★</a>
-                        <a class="star">★</a>
-                        <a class="star">☆</a>
-                        <a class="star">☆</a>
-                    </div>
-                </div>
-                <div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded" id=myrow
-                    onclick="window.location='/test_r.html';">
-                    <div class="col-md-1">
-                        <a id="basic-addon1">
-                            <img src="/img/usuarioblue.svg" width="40" height="40" class="d-inline-block" alt="">
-                        </a>
-                    </div>
-                    <div class="col-md-7">
-                        <h3>Omae wa namae wa</h3>
-                    </div>
-                    <div class="col-md-4 text-right">
-                        <a class="star">★</a>
-                        <a class="star">★</a>
-                        <a class="star">★</a>
-                        <a class="star">☆</a>
-                        <a class="star">☆</a>
-                    </div>
-                </div>
-                <div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded" id=myrow
-                    onclick="window.location='/test_r.html';">
-                    <div class="col-md-1">
-                        <a id="basic-addon1">
-                            <img src="/img/usuarioblue.svg" width="40" height="40" class="d-inline-block" alt="">
-                        </a>
-                    </div>
-                    <div class="col-md-7">
-                        <h3>Omae wa namae wa</h3>
-                    </div>
-                    <div class="col-md-4 text-right">
-                        <a class="star">★</a>
-                        <a class="star">★</a>
-                        <a class="star">★</a>
-                        <a class="star">☆</a>
-                        <a class="star">☆</a>
-                    </div>
-                </div>
+            <div id="list" class="container-fluid">
+
             </div>
             <div class="row pt-1 pb-4">
-
                 <div class="col text-right ">
-                        <a class="btn btn-primary" onclick="list()" role="button">&nbsp listEMp &nbsp</a>
+                    <a class="btn btn-primary"  role="button">&nbsp edit test &nbsp</a>
                     <a class="btn btn-primary" onclick="myFunction()" role="button">&nbsp logout &nbsp</a>
                     <a href="signupem.html" class="btn btn-primary" role="button">&nbsp create &nbsp</a>
                 </div>
@@ -216,11 +143,35 @@
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
     </script>
-    <script src="js/employee.js"></script>  
+    <script src="js/employee.js"></script>
     <script>
-        function list(){
-            console.log(getEmployees());
-         };
+        async function list() {
+            var employess =  await getEmployees();
+            var ele = document.getElementById("list");
+            document.getElementById("number").innerHTML="Employees ("+Object.keys(employess).length+")";
+            var myvar;
+            employess.forEach((employe) => {
+                console.log(employe.key)
+                var uid = "?uid=" + employe.key;
+                myvar = '<div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded" id=myrow' +
+                    '                    onclick="window.location=\'/test_r.html'+uid+'\';">' +
+                    '                    <div class="col-md-1">' +
+                    '                        <a id="basic-addon1">' +
+                    '                            <img src="/img/usuarioblue.svg" width="40" height="40" class="d-inline-block" alt="">' +
+                    '                        </a>' +
+                    '                    </div>' +
+                    '                    <div class="col-md-7">' +
+                    '                        <h3>' + employe.val().name + '</h3>' +
+                    '                    </div>' +
+                    '                    <div class="col-md-4 text-right ">' +
+                    '                        <a class="star">Click to check Results</a>' +
+                    '                    </div>' +
+                    '                </div>';
+                    ele.innerHTML+="\n"+myvar;
+            });
+
+        };
+
         async function myFunction() {
             await firebase.auth().signOut();
             window.location = "index.html";
