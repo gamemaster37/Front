@@ -61,7 +61,34 @@ function newEmployee(mail, password, company) {
     });
 }
 
-function updateEmployee(suid,company) {
+function disableEmp(uid) {
+  const disableurs = firebase.functions().httpsCallable('disableUsr');
+  disableurs({uid:uid}).then(result=>{
+      console.log(result);
+  });
+
+}
+
+function enableEmp(uid) {
+  const disableurs = firebase.functions().httpsCallable('enableUsr');
+  disableurs({uid:uid}).then(result=>{
+      console.log(result);
+  });
+}
+
+function deleteEmpl(uid) {
+  firebase
+    .database()
+    .ref("Employee/" + uid).set(null).then(function () {
+      const deleteurs = firebase.functions().httpsCallable('deleteUsr');
+      deleteurs({ uid: uid }).then(result => {
+        console.log(result);
+      });
+    });
+
+}
+
+function updateEmployee(suid, company) {
   event.preventDefault();
   firebase
     .database()

@@ -5,7 +5,7 @@ function signin(userio) {
         var errorMessage = error.message;
         Swal.fire({
             icon: 'error',
-            title: 'Usuario y/o contraseña son incorrectos',
+            title: errorMessage,
         });
     })
     firebase.auth().onAuthStateChanged(function (user) {

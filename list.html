@@ -77,7 +77,7 @@
                 <h1 id="number">Employees</h1>
             </div>
             <div class="col text-right ">
-   
+
             </div>
         </div>
         <div class="container-fluid">
@@ -128,6 +128,8 @@
     <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-functions.js"></script>
+
     <script>
         // Your web app's Firebase configuration
         var firebaseConfig = {
@@ -148,32 +150,33 @@
     <script src="js/employee.js"></script>
     <script src="js/questions.js"></script>
     <script>
-        
+
         async function message() {
             var employess = await gestTest(localStorage.uid);
             console.log(employess)
-            var myvar="";
+            var myvar = "";
             var ele = document.getElementById("msg");
             employess.forEach(employe => {
                 var name = employe.name
-                myvar += '<p>'+employe.name+'<br> Hizo el test el '+new Date(employe.questionary.date).toLocaleString()+'</p> <hr style="border-block-color: black">';
+                myvar += '<p>' + employe.name + '<br> Hizo el test el ' + new Date(employe.questionary.date).toLocaleString() + '</p> <hr style="border-block-color: black">';
             });
-            ele.innerHTML=myvar;
-            document.getElementById("cardmsg").style='';
+            ele.innerHTML = myvar;
+            document.getElementById("cardmsg").style = '';
         }
 
-            onTest();
+        onTest();
 
         async function list() {
             var employess = await getEmployees();
             var ele = document.getElementById("list");
-            let i=0;
+            let i = 0;
             var myvar;
             employess.forEach((employe) => {
                 console.log(employe.key)
                 i++;
                 var uid = "?uid=" + employe.key;
-                myvar = '<div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded" id=myrow >' +
+                var aux = "" + employe.key;
+                myvar = '<div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded" id=myrow'+i+' >' +
                     '                    <div class="col-md-1">' +
                     '                        <a id="basic-addon1">' +
                     '                            <img src="/img/usuarioblue.svg" width="40" height="40" class="d-inline-block" alt="">' +
@@ -183,18 +186,29 @@
                     '                        <h3>' + employe.val().name + '</h3>' +
                     '                    </div>' +
                     '                    <div class="col text-right ">' +
-                    '                        <a class="btn btn-primary" href="signupem.html'+ uid +'">Edit User</a>' +
+                    '                        <a class="btn btn-primary text-white" id="'+aux+'" onclick="disableEmp(this.id)">Disable</a>' +
                     '                    </div>' +
                     '                    <div class="col text-right ">' +
-                    '                        <a class="btn btn-primary" href="test_r.html'+ uid +'">Check Results</a>' +
+                    '                        <a class="btn btn-primary text-white" id="'+aux+'" onclick="enableEmp(this.id)">Enable</a>' +
+                    '                    </div>' +
+                    '                    <div class="col text-right ">' +
+                    '                        <a class="btn btn-primary" href="signupem.html' + uid + '">Edit</a>' +
+                    '                    </div>' +
+                    '                    <div class="col text-right ">' +
+                    '                        <a class="btn btn-primary text-white" id="'+aux+'" onclick="deleteEmpl(this.id)">Deleted</a>' +
+                    '                    </div>' +
+                    '                    <div class="col text-right ">' +
+                    '                        <a class="btn btn-primary" href="test_r.html' + uid + '">Check Results</a>' +
                     '                    </div>' +
                     '                </div>';
                 ele.innerHTML += "\n" + myvar;
             });
-            document.getElementById("number").innerHTML = "Employees (" +i+ ")";
+            document.getElementById("number").innerHTML = "Employees (" + i + ")";
             message();
         };
 
+
+        
         async function myFunction() {
             await firebase.auth().signOut();
             window.location = "index.html";
