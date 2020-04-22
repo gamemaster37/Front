@@ -1,68 +1,302 @@
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
-<!--sweetAlert2-->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<!-- Firebase js -->
-<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
-<script src="js/questions.js"></script>
+<!doctype html>
+<html lang="en">
 
-<script>
-    // Your web app's Firebase configuration
-    var firebaseConfig = {
-        apiKey: "AIzaSyBQnFZIdOu1iHflA3TSQX5-uqAoEunf66E",
-        authDomain: "parcial-2-de682.firebaseapp.com",
-        databaseURL: "https://parcial-2-de682.firebaseio.com",
-        projectId: "parcial-2-de682",
-        storageBucket: "parcial-2-de682.appspot.com",
-        messagingSenderId: "605657635467",
-        appId: "1:605657635467:web:c2269af816af101420d28e",
-        measurementId: "G-DE561MK6M7"
-    };
-    // Initialize Firebase
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta p1="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    var secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-</script>
-<script>
-    var questions = [{
-        question: "Porque el programa de mendi no sirve",
-        panswer: ["Esta confundido", "No sabe lo que hace", "Tendra mas suerte la proxima", "Ninguna de las anteriores"],
-        answer: 3,
-        value: 999
-    }, {
-        question: "Porque el programa de mendi no sirve",
-        panswer: ["Esta confundido", "No sabe lo que hace", "Tendra mas suerte la proxima", "Ninguna de las anteriores"],
-        answer: 3,
-        value: 999
-    }, {
-        question: "Porque el programa de mendi no sirve",
-        panswer: ["Esta confundido", "No sabe lo que hace", "Tendra mas suerte la proxima", "Ninguna de las anteriores"],
-        answer: 3,
-        value: 999
-    }, {
-        question: "Porque el programa de mendi no sirve",
-        panswer: ["Esta confundido", "No sabe lo que hace", "Tendra mas suerte la proxima", "Ninguna de las anteriores"],
-        answer: 3,
-        value: 999
-    }, {
-        question: "Porque el programa de mendi no sirve",
-        panswer: ["Esta confundido", "No sabe lo que hace", "Tendra mas suerte la proxima", "Ninguna de las anteriores"],
-        answer: 3,
-        value: 999
-    }]
+    <title>Gas Company!</title>
+</head>
 
-    addQuestion(questions);
-</script>
-<!-- Firebase js -->
+
+
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+<style>
+    body,
+    html {
+        height: 100%;
+        margin: 0;
+    }
+
+    .bg {
+        /* The image used */
+        background-image: url("img/natural.jpg");
+        display: grid;
+        /* Full height */
+        height: 100vh;
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    #cardall {
+        margin: auto;
+        width: 60vh;
+        border-radius: 15px;
+    }
+</style>
+
+<body class="bg">
+    <nav class="navbar navbar-light bg-light mb-4" style="height: max-content;">
+        <a class="navbar-brand" style="display: inline-flex;">
+            <img src="/img/gas-natural.svg" width="60" height="60" class="d-inline-block" alt="">
+            <h2 class="pt-2" style="margin-left: 10%;">Caribean Gas</h2>
+        </a>
+    </nav>
+    <div class="card shadow-lg bg-white" id="cardall">
+        <div class="card-header">
+            Aptitudes Test
+        </div>
+        <div class="card-body text-center">
+            <img src="/img/valvula.svg" width="60" height="60" class="d-inline-block mb-4"
+                style="transform: rotate(90deg);">
+            <!-- <h3 class="card-title mb-4">Caribean Gas</h3> -->
+            <div class="overflow-auto" style="max-height: 40vh;">
+                <div class="input-group mb-4">
+                    <input type="text" class="form-control 1" placeholder="Pregunta 1" aria-label="p1"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" class="form-control 1" placeholder="Opcion 1" aria-label="p1"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" class="form-control 1" placeholder="Opcion 2" aria-label="p1"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" class="form-control 1" placeholder="Opcion 3" aria-label="p1"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" class="form-control 1" placeholder="Opcion 4" aria-label="p1"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="number" class="form-control 1" placeholder="Opcion correcta" aria-label="p1"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                        <input type="number" id="p4" class="form-control 1" placeholder="valor" aria-label="p5"
+                            aria-describedby="basic-addon1">
+                    </div>
+                <hr style="border-block-color: black">
+                <div class="input-group mb-4">
+                    <input type="text" id="p2" class="form-control 2" placeholder="Pregunta 2" aria-label="p2"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" id="p2" class="form-control 2" placeholder="Opcion 1" aria-label="p2"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" id="p2" class="form-control 2" placeholder="Opcion 2" aria-label="p2"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" id="p2" class="form-control 2" placeholder="Opcion 3" aria-label="p2"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" id="p2" class="form-control 2" placeholder="Opcion 4" aria-label="p2"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="number" id="p2" class="form-control 2" placeholder="Opcion correcta" aria-label="p3"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                        <input type="number" id="p4" class="form-control 2" placeholder="valor" aria-label="p5"
+                            aria-describedby="basic-addon1">
+                    </div>
+                <hr style="border-block-color: black">
+                <div class="input-group mb-4">
+                    <input type="text" id="p3" class="form-control 3" placeholder="Pregunta 3" aria-label="p3"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" id="p3" class="form-control 3" placeholder="Opcion 1" aria-label="p3"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" id="p3" class="form-control 3" placeholder="Opcion 2" aria-label="p3"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" id="p3" class="form-control 3" placeholder="Opcion 3" aria-label="p3"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" id="p3" class="form-control 3" placeholder="Opcion 4" aria-label="p3"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="number" id="p3" class="form-control 3" placeholder="Opcion correcta" aria-label="p3"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                        <input type="number" id="p4" class="form-control 3" placeholder="valor" aria-label="p5"
+                            aria-describedby="basic-addon1">
+                    </div>
+                <hr style="border-block-color: black">
+                <div class="input-group mb-4">
+                    <input type="text" id="p4" class="form-control 4" placeholder="Pregunta 4" aria-label="p4"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" id="p4" class="form-control 4" placeholder="Opcion 1" aria-label="p4"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" id="p4" class="form-control 4" placeholder="Opcion 2" aria-label="p4"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" id="p4" class="form-control 4" placeholder="Opcion 3" aria-label="p4"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" id="p4" class="form-control 4" placeholder="Opcion 4" aria-label="p4"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="number" id="p4" class="form-control 4" placeholder="Opcion correcta" aria-label="p5"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                        <input type="number" id="p4" class="form-control 4" placeholder="valor" aria-label="p5"
+                            aria-describedby="basic-addon1">
+                    </div>
+                <hr style="border-block-color: black">
+                <div class="input-group mb-4">
+                    <input type="text" id="p5" class="form-control 5" placeholder="Pregunta 5" aria-label="p5"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" id="p5" class="form-control 5" placeholder="Opcion 1" aria-label="p5"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" id="p5" class="form-control 5" placeholder="Opcion 2" aria-label="p5"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" id="p5" class="form-control 5" placeholder="Opcion 3" aria-label="p5"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="text" id="p5" class="form-control 5" placeholder="Opcion 4" aria-label="p5"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                    <input type="number" id="p5" class="form-control 5" placeholder="Opcion correcta" aria-label="p5"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-4">
+                        <input type="number" id="p5" class="form-control 5" placeholder="Valor" aria-label="p5"
+                            aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <a href="list.html" class="btn btn-dark mt-4" >&nbsp Back &nbsp</a>
+            <a onclick="myFunction()" class="btn btn-dark mt-4 text-white">Create-Replace Test</a>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+
+    <!--sweetAlert2-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <!-- Firebase js -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBQnFZIdOu1iHflA3TSQX5-uqAoEunf66E",
+            authDomain: "parcial-2-de682.firebaseapp.com",
+            databaseURL: "https://parcial-2-de682.firebaseio.com",
+            projectId: "parcial-2-de682",
+            storageBucket: "parcial-2-de682.appspot.com",
+            messagingSenderId: "605657635467",
+            appId: "1:605657635467:web:c2269af816af101420d28e",
+            measurementId: "G-DE561MK6M7"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+    <script src="js/questions.js"></script>
+    <script>
+        
+        function myFunction() {
+            var ques1=document.getElementsByClassName("form-control 1");
+            var ques2=document.getElementsByClassName("form-control 2");
+            var ques3=document.getElementsByClassName("form-control 3");
+            var ques4=document.getElementsByClassName("form-control 5");
+            var ques5=document.getElementsByClassName("form-control 5");
+
+            var questions = [{
+                question: ques1[0].value,
+                panswer: [ques1[1].value, ques1[2].value, ques1[3].value, ques1[4].value],
+                answer: (ques1[5].value-1),
+                value: ques1[6].value
+            }, {
+                question: ques2[0].value,
+                panswer: [ques2[1].value, ques2[2].value, ques2[3].value, ques2[4].value],
+                answer: (ques2[5].value-1),
+                value: ques2[6].value
+            }, {
+                question: ques3[0].value,
+                panswer: [ques3[1].value, ques3[2].value, ques3[3].value, ques3[4].value],
+                answer: (ques3[5].value-1),
+                value: ques3[6].value
+            }, {
+                question: ques4[0].value,
+                panswer: [ques4[1].value, ques4[2].value, ques4[3].value, ques4[4].value],
+                answer: (ques4[5].value-1),
+                value: ques4[6].value
+            }, {
+                question: ques5[0].value,
+                panswer: [ques5[1].value, ques5[2].value, ques5[3].value, ques5[4].value],
+                answer: (ques5[5].value-1),
+                value: ques5[6].value
+            }]
+            console.log(questions);
+           addQuestion(questions);
+        };
+    </script>
+    <!-- Firebase js -->
+
+</body>
+
+</html>
