@@ -81,29 +81,24 @@
             </div>
         </div>
         <div class="container-fluid">
-            <div class="input-group mb-4">
-                <div class="input-group-prepend">
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">User</button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Score</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                    </div>
+            <a class="btn btn-secondary btn-lg btn-block" data-toggle="collapse" href="#collapseExample" role="button"
+                aria-expanded="false" aria-controls="collapseExample" style="text-align: start;">
+                Profile Info
+            </a>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body" id="profile">
+
                 </div>
-                <input type="text" class="form-control" placeholder="Search..."
-                    aria-label="Text input with dropdown button">
-                <!-- <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon2">GO!</button>
-                            </div> -->
             </div>
-            <div id="list" class="container-fluid">
+            <div id="list" class="container-fluid mt-4 overflow-auto">
 
             </div>
             <div class="row pt-1 pb-4">
                 <div class="col text-right ">
                     <a href="preguntas.html" class="btn btn-primary" role="button">New Test</a>
                     <a href="signupem.html" class="btn btn-primary" role="button">New Employee</a>
-                    <a class="btn btn-primary text-white" onclick="myFunction()" role="button">&nbsp Logout &nbsp</a>
+                    <a class="btn btn-primary text-white" onclick="myFunction()" role="button">&nbsp Logout
+                        &nbsp</a>
                 </div>
             </div>
         </div>
@@ -149,6 +144,7 @@
     </script>
     <script src="js/employee.js"></script>
     <script src="js/questions.js"></script>
+    <script src="js/rediret.js"></script>
     <script>
 
         async function message() {
@@ -167,6 +163,7 @@
         onTest();
 
         async function list() {
+            fillcompany()
             var employess = await getEmployees();
             var ele = document.getElementById("list");
             let i = 0;
@@ -176,28 +173,20 @@
                 i++;
                 var uid = "?uid=" + employe.key;
                 var aux = "" + employe.key;
-                myvar = '<div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded" id=myrow'+i+' >' +
+                myvar = '<div class="row align-items-center border border-secondary shadow-sm p-3 mb-4 bg-white rounded" id=myrow' + i + ' >' +
                     '                    <div class="col-md-1">' +
                     '                        <a id="basic-addon1">' +
-                    '                            <img src="/img/usuarioblue.svg" width="40" height="40" class="d-inline-block" alt="">' +
+                    '                            <img style="height: 50px;width: 50px;border-radius: 90px 90px 90px 90px;" src="' + employe.val().image + '" width="40" height="40" class="d-inline-block" alt="">' +
                     '                        </a>' +
                     '                    </div>' +
-                    '                    <div class="col-md-7">' +
+                    '                    <div class="col-md-5">' +
                     '                        <h3>' + employe.val().name + '</h3>' +
                     '                    </div>' +
                     '                    <div class="col text-right ">' +
-                    '                        <a class="btn btn-primary text-white" id="'+aux+'" onclick="disableEmp(this.id)">Disable</a>' +
-                    '                    </div>' +
-                    '                    <div class="col text-right ">' +
-                    '                        <a class="btn btn-primary text-white" id="'+aux+'" onclick="enableEmp(this.id)">Enable</a>' +
-                    '                    </div>' +
-                    '                    <div class="col text-right ">' +
+                    '                        <a class="btn btn-primary text-white" id="' + aux + '" onclick="disableEmp(this.id)">Disable</a>' +
+                    '                        <a class="btn btn-primary text-white" id="' + aux + '" onclick="enableEmp(this.id)">Enable</a>' +
                     '                        <a class="btn btn-primary" href="signupem.html' + uid + '">Edit</a>' +
-                    '                    </div>' +
-                    '                    <div class="col text-right ">' +
-                    '                        <a class="btn btn-primary text-white" id="'+aux+'" onclick="deleteEmpl(this.id)">Deleted</a>' +
-                    '                    </div>' +
-                    '                    <div class="col text-right ">' +
+                    '                        <a class="btn btn-primary text-white" id="' + aux + '" onclick="deleteEmpl(this.id)">Delete</a>' +
                     '                        <a class="btn btn-primary" href="test_r.html' + uid + '">Check Results</a>' +
                     '                    </div>' +
                     '                </div>';
@@ -207,8 +196,61 @@
             message();
         };
 
+        async function fillcompany() {
+            var company = await getCompany();
+            let user = await firebase.auth().currentUser;
+            ele=document.getElementById("profile");
+            var myvar = '<div class="row">' +
+                '                        <div class="col-md-4">' +
+                '                            <div class="profile-img mt-3 text-center">' +
+                '                                <img style="height: 150px;width: 150px;border-radius: 90px 90px 90px 90px;" src="'+company.cimage+'"' +
+                '                                    alt="" />' +
+                '                            </div>' +
+                '                        </div>' +
+                '                        <div class="col-md-6">' +
+                '                            <div class="profile-head">' +
+                '                                <h5>'+company.name+'</h5>' +
+                '                                <h6 >' +
+                '                                    Company Maganer' +
+                '                                </h6>' +
+                '                            </div>' +
+                '                            <div class="row">' +
+                '                                <div class="col-md-6">' +
+                '                                    <label>DNI</label>' +
+                '                                </div>' +
+                '                                <div class="col-md-6">' +
+                '                                    <p>'+company.dni+'</p>' +
+                '                                </div>' +
+                '                            </div>' +
+                '                            <div class="row">' +
+                '                                <div class="col-md-6">' +
+                '                                    <label>Company</label>' +
+                '                                </div>' +
+                '                                <div class="col-md-6">' +
+                '                                    <p>'+company.cname+'</p>' +
+                '                                </div>' +
+                '                            </div>' +
+                '                            <div class="row">' +
+                '                                <div class="col-md-6">' +
+                '                                    <label>Email</label>' +
+                '                                </div>' +
+                '                                <div class="col-md-6">' +
+                '                                    <p>'+user.email+'</p>' +
+                '                                </div>' +
+                '                            </div>' +
+                '                            <div class="row">' +
+                '                                <div class="col-md-6">' +
+                '                                    <label>Phone</label>' +
+                '                                </div>' +
+                '                                <div class="col-md-6">' +
+                '                                    <p>'+company.tel+'</p>' +
+                '                                </div>' +
+                '                            </div>' +
+                '                        </div>' +
+                '                    </div>';
+                 ele.innerHTML=myvar;
+        }
 
-        
         async function myFunction() {
             await firebase.auth().signOut();
             window.location = "index.html";

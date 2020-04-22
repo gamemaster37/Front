@@ -88,8 +88,9 @@
                         
                     </div>
                     <div class="col-md-5 text-right ">
-                        <a class="btn btn-primary" onclick="deltest()" role="button">Delete Test</a>
-                        <a class="btn btn-primary" onclick="logout()" role="button">End Test</a>
+                        <a class="btn btn-primary" onclick="deltest()" id="deltest" style="display:none" role="button">Delete Test</a>
+                        <a class="btn btn-primary" onclick="logout()" id="endtest" style="display:none" role="button">End Test</a>
+                        <a class="btn btn-primary" onclick="window.location = 'list.html'" style="display:none" id="back" role="button">Back</a>
                     </div>
                 </div>
             </div>
@@ -131,7 +132,17 @@
     firebase.analytics();
 </script>
 <script src="js/questions.js"></script>
+<script src="js/rediret.js"></script>
 <script>
+    validate()
+    async function validate() {
+    if(await isEmployee()){
+        document.getElementById("endtest").style="";
+    }else{
+        document.getElementById("deltest").style="";
+        document.getElementById("back").style="";
+    }
+}
     async function myFunction() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);

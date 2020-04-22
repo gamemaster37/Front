@@ -83,6 +83,7 @@ function deleteEmpl(uid) {
       const deleteurs = firebase.functions().httpsCallable('deleteUsr');
       deleteurs({ uid: uid }).then(result => {
         console.log(result);
+        window.location = "list.html"
       });
     });
 

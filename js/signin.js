@@ -1,6 +1,6 @@
-function signin(userio) {
+async function signin(userio) {
     event.preventDefault();
-    firebase.auth().signInWithEmailAndPassword(userio.mail, userio.password).catch(function (error) {
+    var au = firebase.auth().signInWithEmailAndPassword(userio.mail, userio.password).catch(function (error) {
         var errorCode = error.code;
         var errorMessage = error.message;
         Swal.fire({
@@ -8,6 +8,7 @@ function signin(userio) {
             title: errorMessage,
         });
     })
+    console.log(au)
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             firebase.auth().currentUser.getIdToken().then(function (idToken) {
@@ -16,7 +17,9 @@ function signin(userio) {
                 Swal.fire({
                     icon: 'success',
                     title: 'usuario registrado, ya puede ingresar',
-                }).then(function () { window.location = "list.html"; });
+                }).then(()=>{
+                        retu()
+                    });  
             });
         }
     });

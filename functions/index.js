@@ -23,7 +23,7 @@ exports.enableUsr = functions.https.onCall((data, context) => {
 });
 
 exports.deleteUsr = functions.https.onCall((data, context) => {
-    return functions.app.admin.auth().deleteUser(uid).then(() => {
+    return functions.app.admin.auth().deleteUser(data.uid).then(() => {
         return {
             message: "Success! " + data.uid + " have been deleted"
         }
