@@ -4,16 +4,17 @@ async function getEmployees() {
   let results = await new Promise((resolve, reject) =>
     ref
       .orderByChild("company")
-      .equalTo(localStorage["uid"]).once('value')
-      .then(function(results,err) {
+      .equalTo(localStorage["uid"])
+      .once("value")
+      .then(function (results, err) {
         if (err) {
-            reject(err);
-          } else {
-            resolve(results);
-          }
+          reject(err);
+        } else {
+          resolve(results);
+        }
       })
   );
-   return results
+  return results;
 }
 
 function newEmployee(mail, password, company) {
@@ -36,26 +37,42 @@ function newEmployee(mail, password, company) {
     .then(() => {
       // autenticacion con firebase
       if (aux) {
-          secondaryApp.auth().onAuthStateChanged(function (user) {
-            if (user) {
-              var uid = localStorage["uid"];
-              var suid = secondaryApp.auth().currentUser.uid;
-              firebase
-                .database()
-                .ref("Employee/" + suid)
-                .set(
-                  Object.fromEntries(Object.entries({ company: uid, ...company }))
-                ).then(function(){
-                  Swal.fire({
-                    icon: "success",
-                    title: "usuario registrado",
-                  }).then(function () {
-                    window.location = "list.html";
-                  });
+        secondaryApp.auth().onAuthStateChanged(function (user) {
+          if (user) {
+            var uid = localStorage["uid"];
+            var suid = secondaryApp.auth().currentUser.uid;
+            firebase
+              .database()
+              .ref("Employee/" + suid)
+              .set(
+                Object.fromEntries(Object.entries({ company: uid, ...company }))
+              )
+              .then(function () {
+                Swal.fire({
+                  icon: "success",
+                  title: "usuario registrado",
+                }).then(function () {
+                  window.location = "list.html";
                 });
-           
+              });
           }
         });
       }
+    });
+}
+
+function updateEmployee(suid,company) {
+  event.preventDefault();
+  firebase
+    .database()
+    .ref("Employee/" + suid)
+    .update(Object.fromEntries(Object.entries({ company })))
+    .then(function () {
+      Swal.fire({
+        icon: "success",
+        title: "usuario registrado",
+      }).then(function () {
+        window.location = "list.html";
+      });
     });
 }

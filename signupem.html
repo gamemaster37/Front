@@ -59,7 +59,7 @@
                     aria-describedby="basic-addon1">
             </div>
             <div class="input-group mb-4">
-                <input type="text" id="image" class="form-control" placeholder="image" aria-label="image"
+                <input type="file" id="image" class="form-control" placeholder="Imagen" aria-label="Password"
                     aria-describedby="basic-addon1">
             </div>
             <div class="input-group mb-4">
@@ -76,8 +76,7 @@
             </div>
             <a href="list.html" class="btn btn-dark" style="margin-left: 10%;">&nbsp Back
                 &nbsp</a>
-            <a onclick="myFunction()" class="btn btn-dark" style="margin-left: 10%;">&nbsp Create
-                &nbsp</a>
+            <a onclick="myFunction()" class="btn btn-dark" style="margin-left: 10%;color:white" id="select"></a>
 
         </div>
     </div>
@@ -120,6 +119,21 @@
     </script>
     <script src="js/employee.js"></script>
     <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const uid = urlParams.get('uid');
+        getUrlParams();
+
+        function getUrlParams() {
+            var ele = document.getElementById("select");
+            if (uid) {
+                ele.innerHTML = "&nbsp Update &nbsp";
+                document.getElementById('password').style="display:none";
+                document.getElementById('mail').style="display:none";
+            } else {
+                ele.innerHTML = "&nbsp Create &nbsp";
+            }
+        }
         function myFunction() {
             var mail = document.getElementById("mail").value;
             var password = document.getElementById("password").value;
@@ -128,8 +142,13 @@
                 image: document.getElementById("image").value,
                 dir: document.getElementById("dir").value
             }
+            if (uid) {
+                updateEmployee(uid, company);
+            } else {
+                newEmployee(mail, password, company);
+            }
             console.log(company);
-            newEmployee(mail, password, company);
+           
         };
     </script>
     <!-- Firebase js -->
