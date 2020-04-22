@@ -1,9 +1,25 @@
 function addQuestion(question) {
   var uid = localStorage["uid"];
+  var aux = true;
   firebase
     .database()
     .ref("Company/" + uid + "/questions")
-    .set(question);
+    .set(question).catch(function (error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      Swal.fire({
+        icon: 'error',
+        title: errorMessage,
+      });
+      var aux = false;
+    }).then(() => {
+      if (aux) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Test Añadido',
+        }).then(function () { window.location = "list.html"; });
+      }
+    });
 }
 
 async function getQuestion() {
